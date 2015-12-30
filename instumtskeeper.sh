@@ -9,20 +9,20 @@ chmod +x $BASEDIR/functions
 fi
 source $BASEDIR/functions 
 
-sudo apt-get install ppp -y
-sudo apt-get install usb-modeswitch -y
-sudo mkdir /etc/umtskeeper
-cd ${dir1}
-sudo wget "http://zool33.uni-graz.at/petz/umtskeeper/src/umtskeeper.tar.gz"
-sudo tar -xzvf ${dir1}umtskeeper.tar.gz
-sudo rm ${dir1}umtskeeper.tar.gz
-sudo chmod +x ${dir1}umtskeeper
- 
-sudo wget "http://downloads.sourceforge.net/project/vim-n4n0/sakis3g.tar.gz?r=http%3A%2F%2Fsourceforge.net%2Fprojects%2Fvim-n4n0%2Ffiles%2F&ts=1363537696&use_mirror=tene~t" -O sakis3g.tar.gz
-sudo tar -xzvf ${dir1}sakis3g.tar.gz
-sudo rm ${dir1}sakis3g.tar.gz
-sudo chmod +x ${dir1}sakis3g
-
+read -p "Initial setup of UMTSKEEPER? (Y/N)" -n 1 -r
+echo ""
+if [[ $REPLY =~ ^[Yy]$ ]]; then
+  if [ -d ${dir1}]; then
+  echo "Are your sure? The folder ${dir1} does exist. If you continue all files in these folder will be overwritten. Proceed? (Y/N) "
+  read -p "Initial setup of UMTSKEEPER? (Y/N)" -n 1 -r
+  echo ""
+   if [[ $REPLY =~ ^[Yy]$ ]]; then
+   baseSetup
+   fi
+  else
+  baseSetup
+  fi
+fi
 #read manufacturer and device id from modem (now only for huwaei)
 #CHANGE take care that the modem is already switched (usb-modeswitch)
 strUSBMODEM="$(lsusb | awk '{if ($7 == "Huawei") print $6;}')"
