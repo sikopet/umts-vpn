@@ -1,6 +1,7 @@
 #!/bin/bash
 
 BASEDIR=$(dirname $0)
+dir1=/etc/umtskeeper/
 #include functions file
 if [ ! -x $BASEDIR/functions ]
 chmod +x $BASEDIR/functions
@@ -9,7 +10,6 @@ $BASEDIR/functions
 
 sudo apt-get install ppp -y
 sudo apt-get install usb-modeswitch -y
-dir1=/etc/umtskeeper/
 sudo mkdir /etc/umtskeeper
 cd /etc/umtskeeper
 sudo wget "http://zool33.uni-graz.at/petz/umtskeeper/src/umtskeeper.tar.gz"
