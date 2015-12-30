@@ -15,8 +15,8 @@ read -p "Initial setup of UMTSKEEPER? (Y/N)" -n 1 -r
 echo ""
 if [[ $REPLY =~ ^[Yy]$ ]]; then
   if [ -d ${dir1} ]; then
-  echo -e "${RED}WARNING!\n${NC}Are your sure? The folder ${dir1} does exist. If you continue all files in these folder will be overwritten. Proceed? (Y/N) "
-  read -p "Initial setup of UMTSKEEPER? (Y/N)" -n 1 -r
+  echo -e "${RED}WARNING!\n${NC}Are your sure? The folder ${dir1} does exist. If you continue all files in these folder will be overwritten."
+  read -p "Proceed? (Y/N) " -n 1 -r
   echo ""
    if [[ $REPLY =~ ^[Yy]$ ]]; then
    baseSetup
