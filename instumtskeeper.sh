@@ -25,6 +25,9 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
   baseSetup
   fi
 fi
+read -p "Write UMTSKEEPER in rc.local? (Y/N)" -n 1 -r
+echo ""
+if [[ $REPLY =~ ^[Yy]$ ]]; then
 #read manufacturer and device id from modem (now only for huwaei)
 #CHANGE take care that the modem is already switched (usb-modeswitch)
 strUSBMODEM="$(lsusb | awk '{if ($7 == "Huawei") print $6;}')"
@@ -49,4 +52,31 @@ then
   configfile
 fi
 writeRcLocal
+fi
+fi
+read -p "Setting up NAT (Y/N)" -n 1 -r
+echo ""
+if [[ $REPLY =~ ^[Yy]$ ]]; then
+setupNAT
+fi
+read -p "Add routes in IP Table (Y/N)" -n 1 -r
+echo ""
+if [[ $REPLY =~ ^[Yy]$ ]]; then
+sudo iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+fi
+read -p "Add routes in IP Table to roots Crontab  (Y/N)" -n 1 -r
+echo ""
+if [[ $REPLY =~ ^[Yy]$ ]]; then
+sudo crontab -l | { cat; echo "@reboot /sbin/iptables -t nat -A POSTROUTING -o ppp0 -j MASQUERADE"; } | sudo crontab -
+fi
+if [[ $REPLY =~ ^[Yy]$ ]]; then
+cd /usr/local/src
+wget http://www.no-ip.com/client/linux/noip-duc-linux.tar.gz
+tar xzf noip-duc-linux.tar.gz
+rm noip-duc-linux.tar.gz
+#CHANGE get it working with any version
+cd no-ip-2.1.9-1
+make
+checkinstall
+/usr/local/bin/noip2 -C   #(dash capital C, this will create the default config file)
 fi
