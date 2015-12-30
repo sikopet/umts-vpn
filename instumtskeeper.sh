@@ -1,6 +1,8 @@
 #!/bin/bash
 
 BASEDIR=$(dirname $0)
+RED='\033[0;31m'
+NC='\033[0m' # No Color
 dir1=/etc/umtskeeper/
 #include functions file
 if [ ! -x $BASEDIR/functions ]
@@ -13,7 +15,7 @@ read -p "Initial setup of UMTSKEEPER? (Y/N)" -n 1 -r
 echo ""
 if [[ $REPLY =~ ^[Yy]$ ]]; then
   if [ -d ${dir1} ]; then
-  echo "Are your sure? The folder ${dir1} does exist. If you continue all files in these folder will be overwritten. Proceed? (Y/N) "
+  echo -e "${RED}WARNING!\n${NC}Are your sure? The folder ${dir1} does exist. If you continue all files in these folder will be overwritten. Proceed? (Y/N) "
   read -p "Initial setup of UMTSKEEPER? (Y/N)" -n 1 -r
   echo ""
    if [[ $REPLY =~ ^[Yy]$ ]]; then
