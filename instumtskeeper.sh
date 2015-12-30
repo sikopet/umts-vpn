@@ -7,12 +7,12 @@ if [ ! -x $BASEDIR/functions ]
 then
 chmod +x $BASEDIR/functions
 fi
-$BASEDIR/functions 
+source $BASEDIR/functions 
 
 sudo apt-get install ppp -y
 sudo apt-get install usb-modeswitch -y
 sudo mkdir /etc/umtskeeper
-cd /etc/umtskeeper
+cd ${dir1}
 sudo wget "http://zool33.uni-graz.at/petz/umtskeeper/src/umtskeeper.tar.gz"
 sudo tar -xzvf ${dir1}umtskeeper.tar.gz
 sudo rm ${dir1}umtskeeper.tar.gz
@@ -33,15 +33,18 @@ strUSBMODEM="$(lsusb | awk '{if ($7 == "Huawei") print $6;}')"
 strConfFile=config.cfg
 if [ ! -f $BASEDIR/$strConfFile ]
 then
-configfile
+source configfile
 else
 if [ ! -x $BASEDIR/$strConfFile ]
+then
 chmod +x $BASEDIR/$strConfFile
 fi
 $BASEDIR/$strConfFile
 read -p "Use existing config file? (Y/N)" -n 1 -r
+echo ""
 if [[ ! $REPLY =~ ^[Yy]$ ]]
 then
   configfile
 fi
 writeRcLocal
+fi
