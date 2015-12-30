@@ -1,21 +1,23 @@
 #functions
+#echo "functions included"
 function configfile(){
    #create config file
   echo -e "\ncreating config.cfg file"
   echo "#This is the config file for raspiUMTSKEEPER" > $BASEDIR/$strConfFile
-  
+
   read -p  "Please enter the APN: " strAPN
   echo -e "\nAPN=$strAPN" >> $BASEDIR/$strConfFile
-  
-  read -p "Please enter the APN USER: "strAPN_USER
+
+  read -p "Please enter the APN User: " strAPN_USER
   echo -e "strAPN_USER=$strAPN_USER" >> $BASEDIR/$strConfFile
-  
-  read -p "Please enter the PIN for SIM card: "strAPN_PASS
+
+  read -p "Please enter the APN Password: " strAPN_PASS
   echo -e "strAPN_PASS=$strAPN_PASS" >> $BASEDIR/$strConfFile
-  
-  read -p "Please enter the PIN for SIM card: "strPIN
-  echo -e "PIN=$strPIN" >> $BASEDIR/$strConfFile
+
+  read -p "Please enter the PIN for SIM card: " strPIN
+  echo -e "strPIN=$strPIN" >> $BASEDIR/$strConfFile
 }
+
 function writeRcLocal(){
    #add or replace line to/in rc.local
    grep -q "umtskeeper" /etc/rc.local
