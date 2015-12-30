@@ -4,6 +4,7 @@ BASEDIR=$(dirname $0)
 dir1=/etc/umtskeeper/
 #include functions file
 if [ ! -x $BASEDIR/functions ]
+then
 chmod +x $BASEDIR/functions
 fi
 $BASEDIR/functions 
