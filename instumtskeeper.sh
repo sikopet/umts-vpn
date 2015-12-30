@@ -12,7 +12,7 @@ source $BASEDIR/functions
 read -p "Initial setup of UMTSKEEPER? (Y/N)" -n 1 -r
 echo ""
 if [[ $REPLY =~ ^[Yy]$ ]]; then
-  if [ -d ${dir1}]; then
+  if [ -d ${dir1} ]; then
   echo "Are your sure? The folder ${dir1} does exist. If you continue all files in these folder will be overwritten. Proceed? (Y/N) "
   read -p "Initial setup of UMTSKEEPER? (Y/N)" -n 1 -r
   echo ""
