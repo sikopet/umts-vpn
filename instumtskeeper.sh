@@ -64,11 +64,13 @@ echo ""
 if [[ $REPLY =~ ^[Yy]$ ]]; then
 sudo iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
 fi
-read -p "Add routes in IP Table to roots Crontab  (Y/N)" -n 1 -r
+read -p "Add routes in IP Table to roots Crontab (Y/N)" -n 1 -r
 echo ""
 if [[ $REPLY =~ ^[Yy]$ ]]; then
 sudo crontab -l | { cat; echo "@reboot /sbin/iptables -t nat -A POSTROUTING -o ppp0 -j MASQUERADE"; } | sudo crontab -
 fi
+read -p "Install and setup no-ip update client (Y/N)" -n 1 -r
+echo ""
 if [[ $REPLY =~ ^[Yy]$ ]]; then
 cd /usr/local/src
 wget http://www.no-ip.com/client/linux/noip-duc-linux.tar.gz
