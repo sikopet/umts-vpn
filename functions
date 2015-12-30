@@ -1,0 +1,12 @@
+#functions
+function configfile(){
+   #create config file
+  echo -e "\ncreating config.cfg file"
+  echo "#This is the config file for raspiUMTSKEEPER" > $BASEDIR/$strConfFile
+  #APN for O2
+  read -p  "Please enter the APN:" strAPN
+  echo -e "\nAPN=$strAPN" >> $BASEDIR/$strConfFile
+  #take care for PIN
+  read -p "Please enter the PIN for SIM card:"strPIN
+  echo -e "PIN=$strPIN" >> $BASEDIR/$strConfFile
+}
