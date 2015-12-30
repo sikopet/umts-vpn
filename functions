@@ -16,3 +16,13 @@ function configfile(){
   read -p "Please enter the PIN for SIM card: "strPIN
   echo -e "PIN=$strPIN" >> $BASEDIR/$strConfFile
 }
+function writeRcLocal(){
+   #add or replace line to/in rc.local
+   grep -q "umtskeeper" /etc/rc.local
+   if [[ $? -eq 0 ]]
+   then
+      sudo sed -i.bak "s|.*umtskeeper.*|${dir1}umtskeeper --sakisoperators \"USBINTERFACE='0' OTHER='USBMODEM' USBMODEM='$strUSBMODEM' APN='CUSTOM_APN' CUSTOM_APN='$strAPN' SIM_PIN='$strPIN' APN_USER='$strAPN_USER' APN_PASS='$strAPN_PASS'\" --sakisswitches \"--sudo --console\" --devicename 'Huawei' --log --silent --monthstart 8 --nat 'no'|g" /etc/rc.local
+   else
+      sudo sed -i.bak "s|exit 0|${dir1}umtskeeper --sakisoperators \"USBINTERFACE='0' OTHER='USBMODEM' USBMODEM='$strUSBMODEM' APN='CUSTOM_APN' CUSTOM_APN='$strAPN' SIM_PIN='$strPIN' APN_USER='$strAPN_USER' APN_PASS='$strAPN_PASS'\" --sakisswitches \"--sudo --console\" --devicename 'Huawei' --log --silent --monthstart 8 --nat 'no' \nexit 0|g" /etc/rc.local
+   fi
+}
