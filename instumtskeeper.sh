@@ -1,4 +1,12 @@
 #!/bin/bash
+
+BASEDIR=$(dirname $0)
+#include functions file
+if [ ! -x $BASEDIR/functions ]
+chmod +x $BASEDIR/functions
+fi
+$BASEDIR/functions 
+
 sudo apt-get install ppp -y
 sudo apt-get install usb-modeswitch -y
 dir1=/etc/umtskeeper/
@@ -22,24 +30,17 @@ strUSBMODEM="$(lsusb | awk '{if ($7 == "Huawei") print $6;}')"
 
 #check if config file exists
 strConfFile=config.cfg
-BASEDIR=$(dirname $0)
 if [ ! -f $BASEDIR/$strConfFile ]
 then
+configfile
 else
 if [ ! -x $BASEDIR/$strConfFile ]
 chmod +x $BASEDIR/$strConfFile
 fi
 $BASEDIR/$strConfFile
 read -p "Use existing config file? (Y/N)" -n 1 -r
-if [[ $REPLY =~ ^[Yy]$ ]]
+if [[ ! $REPLY =~ ^[Yy]$ ]]
 then
-    # do dangerous stuff
+  configfile
 fi
-#add or replace line to/in rc.local
-grep -q "umtskeeper" /etc/rc.local
-if [[ $? -eq 0 ]]
-then
-sudo sed -i.bak "s|.*umtskeeper.*|${dir1}umtskeeper --sakisoperators \"USBINTERFACE='0' OTHER='USBMODEM' USBMODEM='$strUSBMODEM' APN='CUSTOM_APN' CUSTOM_APN='$strAPN' SIM_PIN='$strPIN' APN_USER='guest' APN_PASS='guest'\" --sakisswitches \"--sudo --console\" --devicename 'Huawei' --log --silent --monthstart 8 --nat 'no'|g" /etc/rc.local
-else
-sudo sed -i.bak "s|exit 0|${dir1}umtskeeper --sakisoperators \"USBINTERFACE='0' OTHER='USBMODEM' USBMODEM='$strUSBMODEM' APN='CUSTOM_APN' CUSTOM_APN='$strAPN' SIM_PIN='$strPIN' APN_USER='guest' APN_PASS='guest'\" --sakisswitches \"--sudo --console\" --devicename 'Huawei' --log --silent --monthstart 8 --nat 'no' \nexit 0|g" /etc/rc.local
-fi
+writeRcLocal
